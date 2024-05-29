@@ -1,8 +1,4 @@
-from flask import render_template
-from flask_appbuilder.models.sqla.interface import SQLAInterface
-from flask_appbuilder import ModelView, ModelRestApi
-
-from . import appbuilder, db
+from flask import current_app, render_template
 
 """
     Create your Model based REST API::
@@ -20,7 +16,7 @@ from . import appbuilder, db
         datamodel = SQLAInterface(MyModel)
 
 
-    Next, register your Views::
+    Next, register your Views on create_app Flask factory::
 
 
     appbuilder.add_view(
@@ -37,7 +33,7 @@ from . import appbuilder, db
 """
 
 
-@appbuilder.app.errorhandler(404)
+@current_app.errorhandler(404)
 def page_not_found(e):
     return (
         render_template(
@@ -45,6 +41,3 @@ def page_not_found(e):
         ),
         404,
     )
-
-
-db.create_all()
